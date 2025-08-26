@@ -103,21 +103,6 @@ body.loaded {
     margin-bottom: 20px;
 }
 
-/* Profileボタン */
-.next-page-btn {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 15px 50px;
-    background-color: #333;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-.next-page-btn:hover {
-    background-color: #555;
-}
 
 /* --- スマホ対応スタイル --- */
 @media (max-width: 600px) {
@@ -130,7 +115,43 @@ body.loaded {
     .greeting-box p {
         font-size: 16px;
     }
-    .next-page-btn {
-        padding: 15px 40px;
-    }
+}
+
+/* ページ下部に固定するProfileボタンのスタイル */
+#fixed-profile-btn {
+    position: fixed;        /* 画面に位置を固定 */
+    bottom: 0;              /* 画面の一番下に配置 */
+    left: 0;                /* 画面の左端に配置 */
+    width: 100%;            /* 横幅を画面いっぱいに広げる */
+    z-index: 50;            /* 他の要素より手前に表示 */
+    
+    /* Flexboxでボタン内の文字を中央揃え */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* 見た目のスタイル */
+    padding: 25px 0;        /* 上下の余白 */
+    background-color: #333; /* 背景色 */
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    
+    /* 表示・非表示のアニメーション */
+    opacity: 0;
+    transition: background-color 0.3s, opacity 0.8s ease-out;
+    pointer-events: none;   /* 非表示時はクリックできないように */
+}
+
+/* マウスホバー時のスタイル */
+#fixed-profile-btn:hover {
+    background-color: #555;
+}
+
+/* bodyにloadedクラスがついたら表示 */
+/* .is-visibleクラスがついたら表示 */
+#fixed-profile-btn.is-visible { /* ← 正しくは is-visible */
+    opacity: 1;
+    pointer-events: auto;
 }
