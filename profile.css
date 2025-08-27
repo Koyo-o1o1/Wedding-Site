@@ -2,7 +2,7 @@
 body {
     margin: 0;
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #222;
+    background-color: #ffe9ab;
     color: #333;
 }
 
@@ -40,7 +40,7 @@ body {
 
 /* コンテンツを入れるボックスのスタイル */
 .content-box {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: #f0e1c0;
     padding: 40px;
     border-radius: 10px;
     max-width: 600px;
@@ -54,10 +54,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* --- 余白のスタイル --- */
-#entry-space {
-    height: 80vh;
-}
 .spacer {
     height: 50vh;
 }
@@ -66,8 +62,8 @@ body {
 .final-button {
     display: inline-block;
     padding: 15px 50px;
-    background-color: #f7a; /* 目立つ色 */
-    color: #fff;
+    background-color: rgb(168, 255, 180); /* 目立つ色 */
+    color: #000000;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
@@ -75,7 +71,7 @@ body {
 }
 
 .final-button:hover {
-    background-color: #e69;
+    background-color: rgb(102, 211, 238);
 }
 
 /* スマホ対応 */

@@ -155,3 +155,80 @@ body.loaded {
     opacity: 1;
     pointer-events: auto;
 }
+
+
+/* --- カウントダウンアニメーション --- */
+
+#countdown {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.count-digit {
+    position: absolute;
+    color: #fff;
+    font-weight: bold;
+    /* 最初は非表示にしておく */
+    opacity: 0;
+    /* アニメーションの準備 */
+    animation-duration: 0.8s; /* 1つの数字が表示される時間 */
+    animation-fill-mode: forwards; /* アニメーション終了後、最後の状態を維持 */
+    font-family: 'VT323', monospace;
+}
+
+/* 傾きのスタイル */
+.tilt-left { transform: rotate(-20deg); }
+.tilt-right { transform: rotate(20deg); }
+
+/* 大きさのスタイル */
+.size-s { font-size: 80px; }
+.size-m { font-size: 120px; }
+.size-l { font-size: 160px; }
+
+/* ★★★ 表示・非表示のアニメーション定義 ★★★ */
+.animate {
+    animation-name: fadeInOut;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) rotate(-20deg); /* 傾きは開始時にも適用 */
+    }
+    20% {
+        opacity: 1;
+        transform: scale(1) rotate(-20deg);
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.1) rotate(-20deg);
+    }
+}
+/* 右傾き用のアニメーションも定義 */
+.tilt-right.animate {
+    animation-name: fadeInOutRight;
+}
+@keyframes fadeInOutRight {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) rotate(20deg);
+    }
+    20% {
+        opacity: 1;
+        transform: scale(1) rotate(20deg);
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.1) rotate(20deg);
+    }
+}
