@@ -1,0 +1,5 @@
+# 画像フォルダ全体を除外
+images/
+
+.DS_Store
+Thumbs.db

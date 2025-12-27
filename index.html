@@ -1,49 +1,64 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>たちゃみみさん Wedding</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Invitation</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="no-scroll">
 
-    <div id="loading-screen">
-        <div id="countdown">
-            <span class="count-digit tilt-left size-s">3.</span>
-            <span class="count-digit tilt-right size-m">2.</span>
-            <span class="count-digit tilt-left size-l">1.</span>
-        </div>
+  <div id="loading-screen" aria-label="loading">
+    <div class="loading-inner">
+      <div id="count-3" class="count-item tilt-a">3</div>
+      <div id="count-2" class="count-item tilt-b">2</div>
+      <div id="count-1" class="count-item tilt-c">1</div>
     </div>
+  </div>
 
-    <main id="main-content">
-        <section id="hero"></section>
+  <main id="main-content" class="main-hidden">
 
-        <div id="greeting-zone"></div>
-        
-        <div style="height: 100vh;"></div>
-    </main>
+    <section class="hero">
+      <div class="hero-image photo-placeholder">
+        <img class="hero-img" src="images/top.jpg" alt="Hero" 
+             onload="this.closest('.hero-image').classList.add('has-image');">
+        <span class="ph-text">images/top.jpg</span>
+      </div>
 
-    <section id="greeting">
-        <div class="greeting-box">
-            <h2>ごあいさつ</h2>
-            <p>
-                samplesamplesamplesamplesample<br>
-                <br>
-                aaaaaaaaaaaaaaaaaa<br>
-                aaaaaaaaaaaaaaaaaa<br>
-                aaaaaaaaaaaaaaaaaa<br>
-                aaaaaaaaaaaaaaaaaa
-            </p>
-        </div>
+      <h1 class="hero-message">Happy Wedding</h1>
+      <div class="hero-hint">scroll ↓</div>
     </section>
 
-    <a href="profile.html" id="fixed-profile-btn">Profile</a>
-    
-    <script src="script.js"></script>
+    <div id="observe-point" style="height: 30vh;"></div>
+
+    <section class="greeting" id="greeting">
+      <div class="wedding-card">
+        <div class="card-inner">
+          <h2 class="card-title">ごあいさつ</h2>
+          <div class="gold-line"></div>
+          <p class="card-text">
+            本日はお忙しい中お集まりいただき<br>
+            誠にありがとうございます<br><br>
+            皆様に見守られながらこの日を迎えられたことを<br>
+            心より感謝しております<br><br>
+            どうぞ最後まで<br>
+            ゆっくりとお楽しみください
+          </p>
+        </div>
+      </div>
+      <div class="button-spacer"></div>
+    </section>
+
+  </main>
+
+  <a href="profile.html" id="profile-btn">Profile</a>
+
+  <script src="script.js"></script>
 </body>
 </html>

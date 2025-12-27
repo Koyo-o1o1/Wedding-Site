@@ -1,69 +1,87 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile | たちゃみみさん Wedding</title>
-    <link rel="stylesheet" href="profile.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile | Wedding</title>
+  <link rel="stylesheet" href="profile.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&family=DotGothic16&family=VT323&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <main class="scroll-container">
-        <div id="profile-zone" class="scroll-zone"></div>
-        <div class="spacer"></div>
-        <div id="story-zone" class="scroll-zone"></div>
-        <div class="spacer"></div>
-        <div id="anecdote-zone" class="scroll-zone"></div>
-        <div class="spacer"></div>
-        <div id="final-zone" class="scroll-zone"></div>
-        
-        <div id="photo-btn-zone"></div>
-    </main>
+  <main class="scroll-container">
+    <div id="profile-zone" class="scroll-zone"></div>
+    <div class="spacer"></div>
+    <div id="story-zone" class="scroll-zone"></div>
+    <div class="spacer"></div>
+    <div id="anecdote-zone" class="scroll-zone"></div>
+    <div class="spacer"></div>
+    <div id="final-zone" class="scroll-zone"></div>
+    <div class="spacer" id="photo-btn-zone" style="height: 100vh;"></div>
+  </main>
 
-    <section id="profile-content" class="content-section">
-        <div class="content-box">
-            <h2>Our Profile</h2>
-            <p>
-                ここに新郎新婦のプロフィールが入ります。<br>
-                テキストや画像を自由に追加してください。
-            </p>
-        </div>
-    </section>
-
-    <section id="story-content" class="content-section">
-        <div class="content-box">
-            <h2>Our Story</h2>
-            <p>
-                ここに出会ってからの軌跡が入ります。<br>
-                記念日や思い出などを書いてみましょう。
-            </p>
-        </div>
-    </section>
-
-    <section id="anecdote-content" class="content-section">
-        <div class="content-box">
-            <h2>Anecdote</h2>
-            <p>
-                ここにちょっとした小話が入ります。<br>
-                面白いエピソードなどを紹介してください。
-            </p>
-        </div>
-    </section>
-    
-    <section id="final-content" class="content-section">
-        <a href="#" id="show-final-message-btn" class="final-button">さいごに</a>
-    </section>
-
-    <div id="final-message-overlay">
-        <div class="message-scroller">
-            <p>
-                式を楽しんでねー　夜露死苦～
-            </p>
-        </div>
+  <section id="profile-content" class="content-section">
+    <div class="beige-card">
+      <h2 class="title-en">Our Profile</h2>
+      <p class="card-text">
+        【新郎】名前<br>
+        【新婦】名前
+      </p>
+      <div class="photo-frame photo-placeholder"><span>Photo (16:9)</span></div>
     </div>
+  </section>
 
-    <a href="photo.html" id="fixed-photo-btn">Photo</a>
-    
-    <script src="profile.js"></script>
+  <section id="story-content" class="content-section">
+    <div class="beige-card">
+      <h2 class="title-en">Our Story</h2>
+      <div class="timeline-beige">
+        <div class="tl-item"><span class="tl-dot"></span><span class="tl-text">出会い</span></div>
+        <div class="tl-item"><span class="tl-dot"></span><span class="tl-text">プロポーズ</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="anecdote-content" class="content-section">
+    <div class="beige-card">
+      <h2 class="title-en">Anecdote</h2>
+      <p class="card-text">エピソードや趣味など...</p>
+      <div class="mini-grid">
+        <div class="mini-photo photo-placeholder"><span>Photo 1</span></div>
+        <div class="mini-photo photo-placeholder"><span>Photo 2</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="final-content" class="content-section">
+    <div class="beige-card highlight">
+      <h2 class="title-jp">さいごに</h2>
+      <p class="card-text">ボタンを押すと メッセージが表示されます</p>
+      <button id="final-button" class="action-btn">Message</button>
+    </div>
+  </section>
+
+  <div id="final-message-overlay">
+    <div class="overlay-inner zutomayo-style">
+      <div class="crt-overlay"></div>
+      
+      <h3 class="overlay-title zuto-dot">SPECIAL MESSAGE</h3>
+      
+      <div class="message-body">
+        <p class="msg-text main-msg zuto-dot">式を楽しんでね～</p>
+        <div class="yanki-box">
+          <p class="msg-text yanki-msg zuto-dot">夜露死苦～</p>
+        </div>
+      </div>
+
+      <button id="close-overlay" class="zutomayo-close-btn zuto-dot">CLOSE [X]</button>
+    </div>
+  </div>
+</div>
+
+  <a href="photo.html" id="fixed-photo-btn">Photo</a>
+
+  <script src="profile.js"></script>
 </body>
 </html>

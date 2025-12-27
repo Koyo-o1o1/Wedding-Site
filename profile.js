@@ -1,90 +1,66 @@
-// ▼▼▼ 既存のIntersectionObserverのコード ▼▼▼
-
-// 対象となる要素を全て取得
+// 表示・非表示を切り替えるセクションと、トリガーとなるゾーンを取得
 const zones = document.querySelectorAll('.scroll-zone');
 const contents = document.querySelectorAll('.content-section');
 
-// 監視センサーのオプション設定
-const options = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.4
+const updateSection = () => {
+  const vCenter = window.innerHeight / 2;
+  let activeContent = null;
+
+  zones.forEach(zone => {
+    const rect = zone.getBoundingClientRect();
+    const zoneCenter = rect.top + rect.height / 2;
+    
+    // ゾーンの中央が画面中央に近いとき、そのセクションをアクティブにする
+    if (Math.abs(zoneCenter - vCenter) < window.innerHeight * 0.4) {
+      const targetId = zone.id.replace('-zone', '-content');
+      activeContent = document.getElementById(targetId);
+    }
+  });
+
+  // すべてのコンテンツの .active を一旦外す
+  contents.forEach(c => c.classList.remove('active'));
+  
+  // 該当するコンテンツがあれば .active を追加
+  if (activeContent) {
+    activeContent.classList.add('active');
+  }
 };
 
-// 監視センサーを作成
-const observer = new IntersectionObserver(function(entries, observer) {
-    entries.forEach(entry => {
-        const contentId = entry.target.id.replace('-zone', '-content');
-        const content = document.getElementById(contentId);
-        if(!content) return;
+window.addEventListener('scroll', updateSection);
+window.addEventListener('load', updateSection);
 
-        if (entry.isIntersecting) {
-            content.classList.add('is-visible');
-        } else {
-            content.classList.remove('is-visible');
-        }
-    });
-}, options);
-
-// 全てのゾーンの監視を開始
-zones.forEach(zone => {
-    observer.observe(zone);
-});
-
-
-// ▼▼▼ 「さいごに」メッセージ用のコード（修正版） ▼▼▼
-
-// 要素を取得
-const showMessageBtn = document.getElementById('show-final-message-btn');
+// メッセージ表示の制御
+const finalBtn = document.getElementById('final-button');
 const overlay = document.getElementById('final-message-overlay');
-const messageScroller = document.querySelector('#final-message-overlay .message-scroller');
-const scrollingMessage = messageScroller.querySelector('p');
+const closeBtn = document.getElementById('close-overlay');
 
-// ボタンがクリックされた時の処理
-showMessageBtn.addEventListener('click', function(event) {
-    event.preventDefault();
-    // ★★★ 変更点 ★★★
-    // 表示する前に、メッセージの表示状態をリセットする
-    messageScroller.style.visibility = 'visible';
-    overlay.classList.add('is-active');
+finalBtn?.addEventListener('click', () => {
+  overlay.classList.add('show');
 });
 
-// オーバーレイ自体がクリックされた時に閉じる処理
-overlay.addEventListener('click', function(event) {
-    if (event.target === overlay) {
-        overlay.classList.remove('is-active');
-    }
+closeBtn?.addEventListener('click', () => {
+  overlay.classList.remove('show');
 });
 
-// アニメーションが終了した時の処理
-scrollingMessage.addEventListener('animationend', function() {
-    // ★★★ 変更点 ★★★
-    // まずメッセージを強制的に非表示にする
-    messageScroller.style.visibility = 'hidden';
-    // その後で、オーバーレイをフェードアウトさせる
-    overlay.classList.remove('is-active');
+// 背景クリックでも閉じる
+overlay?.addEventListener('click', (e) => {
+  if (e.target === overlay) overlay.classList.remove('show');
 });
 
+// Photoボタンの表示（IntersectionObserverを使用）
+const photoZone = document.getElementById('photo-btn-zone');
+const photoBtn = document.getElementById('fixed-photo-btn');
 
-
-// Photoボタン用のIntersectionObserver
-
-// 要素を取得
-const photoBtnZone = document.getElementById('photo-btn-zone');
-const fixedPhotoBtn = document.getElementById('fixed-photo-btn');
-
-// Photoボタン用の監視センサーを作成
-const photoBtnObserver = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            // ゾーンが画面内に入った -> 表示クラスを追加
-            fixedPhotoBtn.classList.add('is-visible');
-        } else {
-            // ゾーンが画面外に出た -> 表示クラスを削除
-            fixedPhotoBtn.classList.remove('is-visible');
-        }
+if (photoZone && photoBtn) {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        photoBtn.classList.add('show');
+      } else {
+        photoBtn.classList.remove('show');
+      }
     });
-}, { threshold: 0.1 }); // ゾーンが10%見えたら反応
-
-// Photoボタンゾーンの監視を開始
-photoBtnObserver.observe(photoBtnZone);
+  }, { threshold: 0.1 });
+  
+  observer.observe(photoZone);
+}

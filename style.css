@@ -1,234 +1,207 @@
-/* 基本設定 */
+:root {
+  --gold: #c5a059;
+  --text: #333;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-    margin: 0;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #000;
+  margin: 0;
+  font-family: 'Shippori Mincho', serif;
+  color: var(--text);
+  background: radial-gradient(circle at 20% 10%, rgba(255, 183, 213, 0.15), transparent 40%), #fff;
 }
 
-/* スクロールを禁止するクラス */
 .no-scroll {
-    overflow: hidden;
+  overflow: hidden;
 }
 
-/* 背景画像が読み込まれた後のスタイル */
-body.loaded {
-    /* 背景画像を使いたい場合は、以下のコメントを解除してください */
-    background-image: url('images/virtual.avif');
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
+.main-hidden {
+  opacity: 0;
 }
 
-/* --- ① ローディング画面 --- */
+.main-visible {
+  opacity: 1;
+  transition: opacity 1.5s ease;
+}
+
+/* Loading */
 #loading-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-    transition: opacity 1.5s, visibility 1.5s;
-}
-#loading-screen p {
-    color: #fff;
-    font-size: 24px;
-}
-.hidden {
-    opacity: 0;
-    visibility: hidden;
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* --- ② メインコンテンツ --- */
-#main-content {
-    opacity: 0;
-    transition: opacity 1.5s ease-in;
-}
-#main-content.loaded {
-    opacity: 1;
+#loading-screen.fade-out {
+  opacity: 0;
+  transition: 1s;
+  pointer-events: none;
 }
 
-/* 最初のビュー（スクロールを開始するための空間） */
-#hero {
-    height: 130vh;
+.count-item {
+  color: #fff;
+  font-family: 'VT323';
+  font-size: 96px;
+  display: none;
+  filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.12));
 }
 
-/* ★★★ ごあいさつが表示される「ゾーン」のスタイル ★★★ */
-#greeting-zone {
-    /* この高さの分だけスクロールする間、ごあいさつが表示されます */
-    /* この数値を変更すると、表示され続けるスクロール量が変わります */
-    height: 800px; 
+.tilt-a { transform: rotate(-10deg) translateY(6px); }
+.tilt-b { transform: rotate(8deg) translateY(6px); }
+.tilt-c { transform: rotate(-6deg) translateY(6px); }
+
+.count-item.tilt-a.is-show { display: block; opacity: 1; transform: rotate(-10deg) translateY(0); transition: opacity .2s, transform .2s; }
+.count-item.tilt-b.is-show { display: block; opacity: 1; transform: rotate(8deg) translateY(0); transition: opacity .2s, transform .2s; }
+.count-item.tilt-c.is-show { display: block; opacity: 1; transform: rotate(-6deg) translateY(0); transition: opacity .2s, transform .2s; }
+
+.count-item.is-hide { opacity: 0; transform: translateY(-10px); transition: opacity .2s, transform .2s; }
+
+/* Hero */
+.hero {
+  padding: 80px 20px;
+  text-align: center;
 }
 
-/* ★★★ ごあいさつセクションのスタイル ★★★ */
-#greeting {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    z-index: 10;
-    opacity: 0;
-    visibility: hidden;
-    transform: translate(-50%, -50%) scale(0.95);
-    /* 表示・非表示のアニメーション速度を調整 */
-    transition: opacity 0.5s, visibility 0.5s, transform 0.5s;
+.hero-image {
+  width: 280px;
+  aspect-ratio: 3/4;
+  margin: 0 auto 30px;
+  border-radius: 140px 140px 10px 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  position: relative;
+  background: #f9f9f9;
 }
 
-/* JSによってこのクラスが付与されると、ふわっと表示される */
-#greeting.is-visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(-50%, -50%) scale(1);
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* --- これ以降はごあいさつボックスの中身のスタイル（変更なし） --- */
-.greeting-box {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 40px;
-    border-radius: 10px;
-    max-width: 600px;
-    /* ↓↓↓ greeting-box自体が中央に寄るように margin: auto を追加 */
-    margin: 0 auto;
-    text-align: center;
-    line-height: 2;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-}
-.greeting-box h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
+.ph-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ccc;
+  font-size: 12px;
 }
 
-
-/* --- スマホ対応スタイル --- */
-@media (max-width: 600px) {
-    .greeting-box {
-        padding: 30px 25px;
-    }
-    .greeting-box h2 {
-        font-size: 24px;
-    }
-    .greeting-box p {
-        font-size: 16px;
-    }
+.hero-image.has-image .ph-text {
+  display: none;
 }
 
-/* ページ下部に固定するProfileボタンのスタイル */
-#fixed-profile-btn {
-    position: fixed;        /* 画面に位置を固定 */
-    bottom: 0;              /* 画面の一番下に配置 */
-    left: 0;                /* 画面の左端に配置 */
-    width: 100%;            /* 横幅を画面いっぱいに広げる */
-    z-index: 50;            /* 他の要素より手前に表示 */
-    
-    /* Flexboxでボタン内の文字を中央揃え */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    /* 見た目のスタイル */
-    padding: 25px 0;        /* 上下の余白 */
-    background-color: #333; /* 背景色 */
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 18px;
-    
-    /* 表示・非表示のアニメーション */
-    opacity: 0;
-    transition: background-color 0.3s, opacity 0.8s ease-out;
-    pointer-events: none;   /* 非表示時はクリックできないように */
+.hero-message {
+  color: var(--gold);
+  font-size: 26px;
+  letter-spacing: 0.2em;
 }
 
-/* マウスホバー時のスタイル */
-#fixed-profile-btn:hover {
-    background-color: #555;
+/* ★ scroll ↓ のスタイルとアニメーション */
+.hero-hint {
+  margin-top: 20px;
+  color: #999;
+  font-family: 'VT323';
+  /* 2秒かけて無限に上下に跳ねる */
+  animation: bounce 2s infinite;
 }
 
-/* bodyにloadedクラスがついたら表示 */
-/* .is-visibleクラスがついたら表示 */
-#fixed-profile-btn.is-visible { /* ← 正しくは is-visible */
-    opacity: 1;
-    pointer-events: auto;
+/* 跳ねる動きの定義 */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
 }
 
-
-/* --- カウントダウンアニメーション --- */
-
-#countdown {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Greeting (Elegant Card Design) */
+.greeting {
+  padding: 40px 20px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 1s;
 }
 
-.count-digit {
-    position: absolute;
-    color: #fff;
-    font-weight: bold;
-    /* 最初は非表示にしておく */
-    opacity: 0;
-    /* アニメーションの準備 */
-    animation-duration: 0.8s; /* 1つの数字が表示される時間 */
-    animation-fill-mode: forwards; /* アニメーション終了後、最後の状態を維持 */
-    font-family: 'VT323', monospace;
+.greeting.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* 傾きのスタイル */
-.tilt-left { transform: rotate(-20deg); }
-.tilt-right { transform: rotate(20deg); }
-
-/* 大きさのスタイル */
-.size-s { font-size: 80px; }
-.size-m { font-size: 120px; }
-.size-l { font-size: 160px; }
-
-/* ★★★ 表示・非表示のアニメーション定義 ★★★ */
-.animate {
-    animation-name: fadeInOut;
+.wedding-card {
+  max-width: 400px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  padding: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
 }
 
-@keyframes fadeInOut {
-    0% {
-        opacity: 0;
-        transform: scale(0.8) rotate(-20deg); /* 傾きは開始時にも適用 */
-    }
-    20% {
-        opacity: 1;
-        transform: scale(1) rotate(-20deg);
-    }
-    80% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-        transform: scale(1.1) rotate(-20deg);
-    }
+.card-inner {
+  border: 1px solid var(--gold);
+  padding: 40px 20px;
+  text-align: center;
 }
-/* 右傾き用のアニメーションも定義 */
-.tilt-right.animate {
-    animation-name: fadeInOutRight;
+
+.card-title {
+  font-size: 22px;
+  color: var(--gold);
+  margin: 0 0 15px;
+  letter-spacing: 0.3em;
 }
-@keyframes fadeInOutRight {
-    0% {
-        opacity: 0;
-        transform: scale(0.8) rotate(20deg);
-    }
-    20% {
-        opacity: 1;
-        transform: scale(1) rotate(20deg);
-    }
-    80% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-        transform: scale(1.1) rotate(20deg);
-    }
+
+.gold-line {
+  width: 30px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0 auto 25px;
+}
+
+.card-text {
+  font-size: 15px;
+  line-height: 2.3;
+  letter-spacing: 0.05em;
+}
+
+.button-spacer {
+  height: 180px;
+}
+
+/* Profileボタン */
+#profile-btn {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  padding: 14px 40px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  text-decoration: none;
+  font-family: 'VT323';
+  letter-spacing: 0.2em;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.4s;
+  z-index: 50;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+#profile-btn.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
 }

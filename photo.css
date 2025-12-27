@@ -1,0 +1,107 @@
+:root {
+  --accent: #5d5048;
+  --title-color: #9e8f83;
+  --bg-gradient: 
+    radial-gradient(circle at 10% 10%, rgba(245, 235, 220, 0.6), transparent 50%),
+    radial-gradient(circle at 90% 90%, rgba(255, 225, 210, 0.5), transparent 50%),
+    #f7f4f0;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Shippori Mincho', serif;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.header {
+  padding: 60px 20px 40px;
+  text-align: center;
+}
+
+.title {
+  font-family: 'VT323';
+  font-size: 40px;
+  color: var(--title-color);
+  margin: 0;
+  letter-spacing: 0.1em;
+}
+
+.sub { color: #999; font-size: 14px; margin-top: 10px; }
+
+.gallery-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 25px;
+  padding-bottom: 140px;
+}
+
+.photo-lane {
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  display: flex;
+  touch-action: pan-x;
+  cursor: grab;
+}
+
+.photo-lane:active { cursor: grabbing; }
+.photo-lane::-webkit-scrollbar { display: none; }
+.photo-lane { -ms-overflow-style: none; scrollbar-width: none; }
+
+.lane-inner {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 15px;
+  padding: 0 15px;
+}
+
+/* ★ 高さを揃え、横幅は元の比率を維持する設定 */
+.ph {
+  height: 160px; /* ここでお好みの高さに統一できます */
+  width: auto;   /* 横幅は比率に合わせて自動計算 */
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  background: #fff;
+}
+
+.ph img {
+  height: 100%;  /* 親要素(ph)の高さに合わせる */
+  width: auto;   /* 比率を維持 */
+  display: block;
+  object-fit: contain; /* 画像を切らずに表示 */
+}
+
+.back {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.pill {
+  pointer-events: auto;
+  text-decoration: none;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 10px 30px;
+  border-radius: 999px;
+  font-family: 'VT323';
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s;
+}

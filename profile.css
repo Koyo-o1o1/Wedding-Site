@@ -1,179 +1,396 @@
-/* 基本設定 */
+:root {
+  --accent: #5d5048; /* 温かみのあるトープブラウン */
+  --sub: #dcd0c0;    /* 柔らかなシャンパンベージュ */
+  --text: #3e3a36;
+  /* 背景をベージュ系の多色グラデーションにして「寂しさ」を解消 */
+  --bg-gradient: 
+    radial-gradient(circle at 15% 15%, rgba(245, 235, 220, 0.5), transparent 50%),
+    radial-gradient(circle at 85% 85%, rgba(255, 225, 210, 0.4), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(250, 245, 235, 0.3), transparent 60%),
+    #f7f4f0; /* 全体的に温かみのあるクリーム色 */
+}
+
+* { box-sizing: border-box; }
+
 body {
-    margin: 0;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #ffe9ab;
-    color: #333;
+  margin: 0;
+  font-family: 'Shippori Mincho', serif;
+  color: var(--text);
+  background: var(--bg-gradient);
+  background-attachment: fixed;
 }
 
-/* スクロールするための透明なゾーンのスタイル */
-.scroll-zone {
-    height: 120vh;
-}
+.scroll-container { position: relative; min-height: 700vh; }
+.scroll-zone { height: 100vh; }
+.spacer { height: 80vh; }
 
-/* 画面中央に表示される各コンテンツの共通スタイル */
 .content-section {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    z-index: 10;
-    text-align: center;
-    
-    /* 初期状態：非表示 */
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: translate(-50%, -45%);
-    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
 }
 
-/* .is-visibleクラスが付くと表示される */
-.content-section.is-visible {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transform: translate(-50%, -50%);
+.content-section.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
-/* コンテンツを入れるボックスのスタイル */
-.content-box {
-    background-color: #f0e1c0;
-    padding: 40px;
-    border-radius: 10px;
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
-    line-height: 1.8;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-.content-box h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
+/* ★ベージュ基調のモダンカード */
+.beige-card {
+  width: min(92vw, 440px);
+  background: rgba(255, 255, 255, 0.7); /* 半透明ホワイト */
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 45px 35px;
+  box-shadow: 0 15px 35px rgba(93, 80, 72, 0.08); /* ブラウン系の影 */
+  text-align: center;
+  border: 1px solid rgba(220, 208, 192, 0.5); /* ベージュの境界線 */
 }
 
-.spacer {
-    height: 50vh;
+/* 最後のカードにベージュのアクセント */
+.beige-card.highlight {
+  border: 1px solid var(--sub);
+  background: rgba(255, 252, 248, 0.85);
 }
 
-/* ★★★ 「さいごに」ボタンのスタイルを追加 ★★★ */
-.final-button {
-    display: inline-block;
-    padding: 15px 50px;
-    background-color: rgb(168, 255, 180); /* 目立つ色 */
-    color: #000000;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.3s;
+.title-en {
+  font-family: 'VT323';
+  font-size: 34px;
+  color: var(--accent);
+  margin: 0 0 20px;
+  letter-spacing: 0.1em;
 }
 
-.final-button:hover {
-    background-color: rgb(102, 211, 238);
+.title-jp {
+  font-size: 24px;
+  color: var(--accent);
+  margin: 0 0 15px;
+  font-weight: 700;
 }
 
-/* スマホ対応 */
-@media (max-width: 600px) {
-    .content-box {
-        padding: 30px 25px;
-    }
+.card-text {
+  font-size: 15px;
+  line-height: 2.1;
+  margin-bottom: 25px;
 }
 
+/* 写真枠 */
+.photo-frame {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: rgba(93, 80, 72, 0.03);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.photo-placeholder { display: flex; align-items: center; justify-content: center; color: #bbb; font-size: 13px; }
 
+.mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+.mini-photo { aspect-ratio: 1; border-radius: 12px; background: rgba(93, 80, 72, 0.03); }
 
-/* --- 「さいごに」メッセージ用のオーバーレイ --- */
+/* タイムライン */
+.timeline-beige {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+}
+.tl-item { display: flex; align-items: center; gap: 15px; }
+.tl-dot { width: 8px; height: 8px; background: var(--sub); border-radius: 50%; }
+
+/* ボタン */
+.action-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 14px 40px;
+  border-radius: 999px;
+  font-family: 'VT323';
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 10px 20px rgba(93, 80, 72, 0.2);
+}
+.action-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(93, 80, 72, 0.3); }
+
+/* Overlay */
 #final-message-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
-    z-index: 999;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-
-    /* 初期状態：非表示 */
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.5s, visibility 0.5s;
+  position: fixed;
+  inset: 0;
+  background: rgba(62, 58, 54, 0.85); /* ダークブラウンの透過背景 */
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.5s;
 }
+#final-message-overlay.show { opacity: 1; pointer-events: auto; }
+.overlay-inner { background: #fff; padding: 45px; width: 90%; max-width: 420px; text-align: center; border-radius: 20px; }
+.overlay-title { color: var(--accent); font-family: 'VT323'; font-size: 32px; margin-top: 0; }
+.close-btn { margin-top: 25px; border: 1px solid #eee; background: none; padding: 10px 25px; border-radius: 999px; cursor: pointer; }
 
-#final-message-overlay.is-active {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-/* メッセージが流れるコンテナ */
-.message-scroller {
-    width: 100%;
-    color: #fff;
-    font-size: 24px;
-    white-space: nowrap;
-    
-    /* ★★★ ここからが修正点 ★★★ */
-    /* 初期状態では透明にしておく */
-    opacity: 0;
-    /* 透明度が0.3秒かけて変化するように設定 */
-    transition: opacity 0.3s ease-out;
-}
-
-/* ▼▼▼ オーバーレイ表示時にメッセージを不透明にする ▼▼▼ */
-#final-message-overlay.is-active .message-scroller {
-    opacity: 1;
-}
-
-/* ▼▼▼ アニメーションはpタグに適用する ▼▼▼ */
-#final-message-overlay.is-active .message-scroller p {
-    animation: scroll-left 3s linear forwards;
-}
-
-/* 右から左へ流れるアニメーションの定義 */
-@keyframes scroll-left {
-    from { transform: translateX(100%); }
-    to { transform: translateX(-100%); }
-}
-
-
-/* Photoボタンを表示させるためのゾーン */
-#photo-btn-zone {
-    height: 30vh; /* このゾーンに入ったらボタンが表示される */
-}
-
-/* ページ下部に固定するPhotoボタンのスタイル */
+/* Photoボタン (固定) */
 #fixed-photo-btn {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 50;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    padding: 25px 0;
-    background-color: #555; /* Profileボタンと色を変える */
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 18px;
-    
-    /* 初期状態は非表示 */
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: all 0.5s;
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px);
+  padding: 14px 40px; border-radius: 999px; background: #fff;
+  border: 1px solid var(--accent); color: var(--accent); text-decoration: none;
+  font-family: 'VT323'; font-size: 18px; opacity: 0; transition: 0.4s;
+  z-index: 50; box-shadow: 0 10px 30px rgba(93, 80, 72, 0.1);
+}
+#fixed-photo-btn.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.footer { padding: 100px 0 120px; text-align: center; color: #aaa; font-size: 12px; }
+
+/* --- ずとまよ「お勉強しといてよ」風メッセージデザイン --- */
+
+#final-message-overlay {
+  position: fixed;
+  inset: 0;
+  /* 背景はMVのような深い夜の紫黒 */
+  background: rgba(13, 1, 23, 0.95);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
 }
 
-/* .is-visibleクラスがついたら表示 */
-#fixed-photo-btn.is-visible {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
+#final-message-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ドットフォントの適用 */
+.dot-font {
+  font-family: 'VT323', monospace;
+  letter-spacing: 0.1em;
+}
+
+/* メッセージボックス（CRTモニター風） */
+.overlay-inner.zutomayo-style {
+  position: relative;
+  background: #1a1a2e;
+  padding: 50px 30px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  border-radius: 10px;
+  /* ネオンピンクとライムグリーンの鋭い影 */
+  border: 3px solid #ff007f;
+  box-shadow: 
+    0 0 20px rgba(255, 0, 127, 0.5),
+    10px 10px 0px #39ff14; /* ズレたライムグリーンの影 */
+  overflow: hidden;
+}
+
+/* 走査線（スキャンライン）演出 */
+.crt-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.1) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.overlay-title {
+  color: #39ff14; /* ネオンライムグリーン */
+  font-size: 28px;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px #ff007f;
+}
+
+.message-body {
+  margin-bottom: 40px;
+}
+
+.msg-text {
+  color: #fff;
+  margin: 10px 0;
+}
+
+.main-msg {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+
+/* zutomayo ppoi */
+
+
+/* --- 共通：日本語ドットフォントの定義 --- */
+.zuto-dot {
+  font-family: 'DotGothic16', 'VT323', monospace;
+  letter-spacing: 0.05em;
+  font-weight: normal;
+}
+
+/* --- オーバーレイ背景 --- */
+#final-message-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 1, 23, 0.98); /* 真っ暗に近い深い紫 */
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+#final-message-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* --- ずとまよウィンドウ本体 --- */
+.overlay-inner.zutomayo-style {
+  position: relative;
+  background: #0f001a;
+  padding: 60px 30px;
+  width: 92%;
+  max-width: 420px;
+  text-align: center;
+  border-radius: 2px;
+  
+  /* ネオンパープルの縁取りと、ライムグリーンのズレたブロック影 */
+  border: 4px solid #9100ff;
+  box-shadow: 
+    0 0 30px rgba(145, 0, 255, 0.6),
+    12px 12px 0px #39ff14; 
+  overflow: hidden;
+}
+
+/* --- 走査線（スキャンライン） --- */
+.crt-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* --- 各テキストデザイン --- */
+.overlay-title {
+  color: #39ff14; /* ライムグリーン */
+  font-size: 22px;
+  margin-bottom: 35px;
+  text-shadow: 3px 3px #9100ff;
+}
+
+.main-msg {
+  font-size: 26px;
+  color: #fff;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* --- 夜露死苦（ヤンキー演出） --- */
+.yanki-box {
+  display: inline-block;
+  background: #9100ff; /* パープル背景 */
+  padding: 8px 30px;
+  transform: rotate(-3deg); /* 絶妙な傾き */
+  box-shadow: 6px 6px 0px #39ff14;
+  animation: yanki-vibration 0.15s infinite;
+}
+
+.yanki-msg {
+  font-size: 38px;
+  color: #fff;
+  margin: 0;
+}
+
+@keyframes yanki-vibration {
+  0% { transform: rotate(-3deg) translate(0, 0); }
+  50% { transform: rotate(-3deg) translate(-2px, 1px); }
+  100% { transform: rotate(-3deg) translate(2px, -1px); }
+}
+
+/* --- CLOSEボタン（ドット完全対応） --- */
+.zutomayo-close-btn {
+  background: transparent;
+  border: 2px solid #39ff14;
+  color: #39ff14;
+  padding: 12px 25px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 40px;
+  transition: 0.2s;
+  position: relative;
+  z-index: 10;
+  display: inline-block;
+}
+
+.zutomayo-close-btn:hover {
+  background: #39ff14;
+  color: #0f001a;
+  box-shadow: 0 0 20px #39ff14;
+  transform: scale(1.05);
+}
+
+.main-msg {
+  font-size: 26px;
+  color: #fff;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  
+  /* ★テレビのちらつきアニメーションを適用 */
+  animation: tv-flicker 3s infinite;
+  position: relative;
+}
+
+/* ★テレビがランダムにちらつく・一瞬消える演出の定義 */
+@keyframes tv-flicker {
+  0%   { opacity: 1; transform: translateX(0); }
+  2%   { opacity: 0.4; transform: translateX(1px); }
+  4%   { opacity: 1; transform: translateX(0); }
+  30%  { opacity: 1; }
+  31%  { opacity: 0.2; transform: translateX(-2px); } /* 一瞬消えかける */
+  33%  { opacity: 1; transform: translateX(0); }
+  34%  { opacity: 1; }
+  35%  { opacity: 0.7; }
+  36%  { opacity: 1; }
+  80%  { opacity: 1; }
+  81%  { opacity: 0.5; transform: scaleY(0.9); } /* 縦に少し潰れるノイズ */
+  83%  { opacity: 1; transform: scaleY(1); }
+  84%  { opacity: 1; }
+  90%  { opacity: 1; }
+  91%  { opacity: 0.1; } /* 一瞬ほぼ消える */
+  93%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+/* 夜露死苦（ヤンキー演出：振動は継続） */
+.yanki-box {
+  display: inline-block;
+  background: #9100ff; 
+  padding: 8px 30px;
+  transform: rotate(-3deg);
+  box-shadow: 6px 6px 0px #39ff14;
+  animation: yanki-vibration 0.15s infinite;
 }

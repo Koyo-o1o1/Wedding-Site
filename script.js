@@ -1,67 +1,64 @@
-// ページが読み込まれた時の処理
-window.onload = function() {
-    const body = document.body;
-    const loadingScreen = document.getElementById('loading-screen');
-    const mainContent = document.getElementById('main-content');
-    
-    // カウントダウンする数字の要素を取得
-    const count3 = document.querySelector('#countdown .size-s');
-    const count2 = document.querySelector('#countdown .size-m');
-    const count1 = document.querySelector('#countdown .size-l');
+window.addEventListener("load", () => {
+  const body = document.body;
+  const loading = document.getElementById("loading-screen");
+  const main = document.getElementById("main-content");
 
-    // 0秒後: 「3」を表示
-    setTimeout(function() {
-        count3.classList.add('animate');
-    }, 0);
+  const c3 = document.getElementById("count-3");
+  const c2 = document.getElementById("count-2");
+  const c1 = document.getElementById("count-1");
 
-    // 0.8秒後: 「2」を表示
-    setTimeout(function() {
-        count2.classList.add('animate');
-    }, 800); // 800ミリ秒 = 0.8秒
+  const observePoint = document.getElementById("observe-point");
+  const profileBtn = document.getElementById("profile-btn");
+  const greeting = document.getElementById("greeting");
 
-    // 1.6秒後: 「1」を表示
-    setTimeout(function() {
-        count1.classList.add('animate');
-    }, 1600); // 1600ミリ秒 = 1.6秒
+  // 指定時間待機する関数
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-    // 2.5秒後: ローディング画面を消してメインコンテンツを表示
-    setTimeout(function() {
-        loadingScreen.classList.add('hidden');
-        body.classList.add('loaded');
-        mainContent.classList.add('loaded');
-        body.classList.remove('no-scroll');
-    }, 2500); // 2500ミリ秒 = 2.5秒
-};
+  // カウントダウンの数字を表示→非表示にする関数
+  const showAndHide = async (el, showMs = 320, gapMs = 120) => {
+    el.style.display = "block";
+    el.classList.add("is-show");
+    el.setAttribute("aria-hidden", "false");
 
-/* ★★★ ここからがスクロール監視のコード ★★★ */
+    await sleep(showMs);
 
-// 監視対象となる要素
-const greetingSection = document.getElementById('greeting');
-const profileBtn = document.getElementById('fixed-profile-btn');
-// 監視の目印となるゾーン
-const greetingZone = document.getElementById('greeting-zone');
+    el.classList.remove("is-show");
+    el.classList.add("is-hide");
+    el.setAttribute("aria-hidden", "true");
 
-// 監視センサーのオプション設定
-const options = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1 // ★★★ ここを 0 から 0.1 に変更 ★★★
-};
+    await sleep(220);
+    el.classList.remove("is-hide");
+    el.style.display = "none";
 
-// 監視センサーを作成
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
+    await sleep(gapMs);
+  };
+
+  (async () => {
+    // 3, 2, 1 を順番に表示
+    await showAndHide(c3);
+    await showAndHide(c2);
+    await showAndHide(c1, 360, 80);
+
+    // ロード画面をフェードアウトし、メインコンテンツを表示
+    loading.classList.add("fade-out");
+    main.classList.remove("main-hidden");
+    main.classList.add("main-visible");
+
+    await sleep(1000);
+    loading.style.display = "none";
+    body.classList.remove("no-scroll");
+
+    // スクロール検知の設定
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        // 指定ポイントを通過したら、ごあいさつとボタンを表示
         if (entry.isIntersecting) {
-            // ゾーンが画面内に10%以上入った -> 表示クラスを追加
-            greetingSection.classList.add('is-visible');
-            profileBtn.classList.add('is-visible');
-        } else {
-            // ゾーンが画面内から10%未満になった -> 表示クラスを削除
-            greetingSection.classList.remove('is-visible');
-            profileBtn.classList.remove('is-visible');
+          profileBtn.classList.add("show");
+          greeting.classList.add("show");
         }
-    });
-}, options);
+      });
+    }, { threshold: 0.12 });
 
-// ゾーンの監視を開始
-observer.observe(greetingZone);
+    io.observe(observePoint);
+  })();
+});
