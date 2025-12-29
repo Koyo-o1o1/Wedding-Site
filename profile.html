@@ -12,33 +12,123 @@
 <body>
 
   <main class="scroll-container">
-    <div id="profile-zone" class="scroll-zone"></div>
+    <div id="profile-title-zone" class="scroll-zone"></div>
     <div class="spacer"></div>
+    
+    <div id="groom-zone" class="scroll-zone"></div>
+    <div class="spacer"></div>
+    
+    <div id="bride-zone" class="scroll-zone"></div>
+    <div class="spacer"></div>
+    
     <div id="story-zone" class="scroll-zone"></div>
     <div class="spacer"></div>
+    
     <div id="anecdote-zone" class="scroll-zone"></div>
     <div class="spacer"></div>
+    
     <div id="final-zone" class="scroll-zone"></div>
     <div class="spacer" id="photo-btn-zone" style="height: 100vh;"></div>
   </main>
 
-  <section id="profile-content" class="content-section">
-    <div class="beige-card">
+  <section id="profile-title-content" class="content-section">
+    <div class="beige-card title-only">
       <h2 class="title-en">Our Profile</h2>
-      <p class="card-text">
-        【新郎】名前<br>
-        【新婦】名前
-      </p>
-      <div class="photo-frame photo-placeholder"><span>Photo (16:9)</span></div>
+      <p class="scroll-hint">scroll ↓</p>
+    </div>
+  </section>
+
+  <section id="groom-content" class="content-section">
+    <div class="beige-card profile-detail">
+      <h2 class="title-en">Groom</h2>
+      <div class="profile-layout">
+        <div class="photo-frame">
+          <img src="images/photo/groom.jpg" alt="新郎写真" onerror="this.parentElement.innerHTML='<span>Photo</span>'">
+        </div>
+        <div class="info-list">
+          <div class="info-item"><span class="label">氏名</span><span class="val">中川 大鳳</span></div>
+          <div class="info-item"><span class="label">生年月日</span><span class="val">1998/11/27</span></div>
+          <div class="info-item"><span class="label">血液型</span><span class="val">B型</span></div>
+          <div class="info-item"><span class="label">出身地</span><span class="val">石川県金沢市</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="bride-content" class="content-section">
+    <div class="beige-card profile-detail">
+      <h2 class="title-en">Bride</h2>
+      <div class="profile-layout">
+        <div class="photo-frame">
+          <img src="images/photo/bride.jpg" alt="新婦写真" onerror="this.parentElement.innerHTML='<span>Photo</span>'">
+        </div>
+        <div class="info-list">
+          <div class="info-item"><span class="label">氏名</span><span class="val">上村 瑞稀</span></div>
+          <div class="info-item"><span class="label">生年月日</span><span class="val">1999/10/30</span></div>
+          <div class="info-item"><span class="label">血液型</span><span class="val">A型</span></div>
+          <div class="info-item"><span class="label">出身地</span><span class="val">山口県下関市</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <section id="story-content" class="content-section">
-    <div class="beige-card">
+    <div class="beige-card scrollable-card">
       <h2 class="title-en">Our Story</h2>
       <div class="timeline-beige">
-        <div class="tl-item"><span class="tl-dot"></span><span class="tl-text">出会い</span></div>
-        <div class="tl-item"><span class="tl-dot"></span><span class="tl-text">プロポーズ</span></div>
+        <div class="tl-item">
+          <span class="tl-date">2018.04.07</span>
+          <div class="tl-content">
+            <p class="tl-title">ファーストコンタクト</p>
+            <p class="tl-desc">大学の新入生歓迎会で出会う。<br>第一印象はお互いの見た目から「やべぇやつ来た」。</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-date">2019</span>
+          <div class="tl-content">
+            <p class="tl-title">バンド結成</p>
+            <p class="tl-desc">一緒にいろいろなバンドを組むようになる。<br>遊びに行く機会が増える。</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-date">2020</span>
+          <div class="tl-content">
+            <p class="tl-title">～時は2020年 突如コロナ襲撃～</p>
+            <p class="tl-desc">世界に訪れたstay home文化により南の島（あつまれどうぶつの森）にて会う機会が激増。</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-date">2020.08.25</span>
+          <div class="tl-content">
+            <p class="tl-title">交際開始</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-date">2022.04</span>
+          <div class="tl-content">
+            <p class="tl-title">同棲開始</p>
+            <p class="tl-desc">旦那が寄生する形で生活スタート。</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-date">2024.12.24</span>
+          <div class="tl-content">
+            <p class="tl-title">新郎側からのプロポーズ</p>
+            <p class="tl-desc">後に彼はこう語る。「緊張した」と。</p>
+          </div>
+        </div>
+        <div class="tl-item is-final">
+          <span class="tl-date">2025.05.11</span>
+          <div class="tl-content">
+            <p class="tl-title">入籍</p>
+          </div>
+        </div>
+        <div class="tl-item is-today">
+          <span class="tl-date">2026.03.21</span>
+          <div class="tl-content">
+            <p class="tl-title">結婚式</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -46,11 +136,7 @@
   <section id="anecdote-content" class="content-section">
     <div class="beige-card">
       <h2 class="title-en">Anecdote</h2>
-      <p class="card-text">エピソードや趣味など...</p>
-      <div class="mini-grid">
-        <div class="mini-photo photo-placeholder"><span>Photo 1</span></div>
-        <div class="mini-photo photo-placeholder"><span>Photo 2</span></div>
-      </div>
+      <p class="card-text">お二人の共通の趣味や、大好きなものの事など...</p>
     </div>
   </section>
 
@@ -65,22 +151,21 @@
   <div id="final-message-overlay">
     <div class="overlay-inner zutomayo-style">
       <div class="crt-overlay"></div>
-      
       <h3 class="overlay-title zuto-dot">SPECIAL MESSAGE</h3>
-      
       <div class="message-body">
         <p class="msg-text main-msg zuto-dot">式を楽しんでね～</p>
         <div class="yanki-box">
           <p class="msg-text yanki-msg zuto-dot">夜露死苦～</p>
         </div>
       </div>
-
       <button id="close-overlay" class="zutomayo-close-btn zuto-dot">CLOSE [X]</button>
     </div>
   </div>
-</div>
 
-  <a href="photo.html" id="fixed-photo-btn">Photo</a>
+  <div id="fixed-nav">
+    <a href="index.html" class="pill">Top</a>
+    <a href="photo.html" class="pill">Photo</a>
+  </div>
 
   <script src="profile.js"></script>
 </body>

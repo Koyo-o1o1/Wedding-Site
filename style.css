@@ -179,29 +179,44 @@ body {
   height: 180px;
 }
 
-/* Profileボタン */
+/* ボタンエリア：2つのボタンを横並びにする */
 #profile-btn {
   position: fixed;
   bottom: 30px;
   left: 50%;
+  /* 最初は透明で少し下に下げておく（既存の仕組みを維持） */
   transform: translateX(-50%) translateY(20px);
-  padding: 14px 40px;
-  border-radius: 999px;
-  background: #fff;
-  border: 1px solid var(--gold);
-  color: var(--gold);
-  text-decoration: none;
-  font-family: 'VT323';
-  letter-spacing: 0.2em;
+  display: flex;
+  gap: 15px; /* ボタン同士の間隔 */
+  z-index: 100;
   opacity: 0;
   pointer-events: none;
   transition: 0.4s;
-  z-index: 50;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
+/* スクロールして表示された時（既存の仕組みを維持） */
 #profile-btn.show {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
   pointer-events: auto;
+}
+
+/* ボタン（ピル型）の共通デザイン */
+.pill {
+  text-decoration: none;
+  /* index.html のテーマカラー(ゴールド)を適用 */
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 12px 35px;
+  border-radius: 999px;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+}
+
+.pill:hover {
+  background: var(--gold);
+  color: #fff;
 }
