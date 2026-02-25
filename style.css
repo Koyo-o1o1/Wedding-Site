@@ -7,12 +7,15 @@
   box-sizing: border-box;
 }
 
+
 body {
   margin: 0;
   font-family: 'Shippori Mincho', serif;
-  /* 背景イラストの設定 */
   background-image: url('./images/top_bg.JPG');
-  background-size: cover;
+  
+  /* ★修正：cover を 100% 100% に変更します */
+  background-size: 100% 100%; 
+  
   background-position: center center;
   background-attachment: fixed;
   background-repeat: no-repeat;
