@@ -163,15 +163,43 @@ body {
 }
 #fixed-nav.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
 
+/* ナビゲーションボタンの共通スタイル */
 .pill {
-  text-decoration: none; color: var(--accent); border: 1px solid var(--accent);
-  padding: 12px 35px; border-radius: 999px; font-family: 'VT323', monospace;
-  font-size: 18px; background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 8px 20px rgba(93, 80, 72, 0.1); transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  padding: 12px 25px;
+  border-radius: 999px;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  transition: 0.3s; /* 滑らかに変化させる */
+  min-width: 90px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  /* 各ページのベースカラーを境界線に使用 */
+  border: 1px solid var(--accent, #5d5048); 
+  color: var(--accent, #5d5048);
 }
-.pill:hover { background: var(--accent); color: #fff; }
 
-/* さいごに & ずとまよ演出 */
+/* ★ 修正：ホバー時のアクション */
+.pill:hover {
+  background: var(--accent, #5d5048); /* 背景を濃い色に */
+  color: #fff; /* 文字を白に */
+  transform: translateY(-2px); /* 少し上に浮き上がらせる */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* index.html（Topページ）のみゴールドのテーマに合わせる */
+.back .pill {
+  border-color: var(--gold, #c5a059);
+  color: var(--gold, #c5a059);
+}
+.back .pill:hover {
+  background: var(--gold, #c5a059);
+  color: #fff;
+}
+
+/* さいごに & ずとまよ演出
 .highlight { border: 1px solid var(--sub); background: rgba(255, 252, 248, 0.85); }
 .title-jp { font-size: 24px; color: var(--accent); margin: 0 0 15px; }
 .action-btn { background: var(--accent); color: #fff; border: none; padding: 14px 40px; border-radius: 999px; font-family: 'VT323'; font-size: 20px; cursor: pointer; transition: 0.3s; }
@@ -192,4 +220,61 @@ body {
 .yanki-box { display: inline-block; background: #9100ff; padding: 8px 30px; transform: rotate(-3deg); box-shadow: 6px 6px 0px #39ff14; animation: yanki-vibration 0.15s infinite; }
 .yanki-msg { font-size: 38px; color: #fff; margin: 0; }
 @keyframes yanki-vibration { 0% { transform: rotate(-3deg); } 50% { transform: rotate(-3deg) translate(-2px, 1px); } 100% { transform: rotate(-3deg) translate(2px, -1px); } }
-.zutomayo-close-btn { background: transparent; border: 2px solid #39ff14; color: #39ff14; padding: 12px 25px; font-size: 14px; margin-top: 40px; cursor: pointer; }
+.zutomayo-close-btn { background: transparent; border: 2px solid #39ff14; color: #39ff14; padding: 12px 25px; font-size: 14px; margin-top: 40px; cursor: pointer; } */
+
+/* --- さいごに & ずとまよ演出（メッセージ長文対応版） --- */
+.highlight { border: 1px solid var(--sub); background: rgba(255, 252, 248, 0.85); }
+.title-jp { font-size: 24px; color: var(--accent); margin: 0 0 15px; }
+.action-btn { background: var(--accent); color: #fff; border: none; padding: 14px 40px; border-radius: 999px; font-family: 'VT323'; font-size: 20px; cursor: pointer; transition: 0.3s; }
+
+.zuto-dot { font-family: 'DotGothic16', 'VT323', monospace; letter-spacing: 0.05em; }
+
+#final-message-overlay { position: fixed; inset: 0; background: rgba(13, 1, 23, 0.98); backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
+#final-message-overlay.show { opacity: 1; pointer-events: auto; }
+
+.overlay-inner.zutomayo-style { 
+  position: relative; 
+  /* ★ 修正：元の単色背景を消し、画像を設定 */
+  /* 文字が背景に埋もれないよう、rgba(...) でうっすらと暗い紫のフィルターを重ねています */
+  background: linear-gradient(rgba(15, 0, 26, 0.5), rgba(15, 0, 26, 0.5)), url('images/special.jpg');
+  background-size: cover;
+  background-position: center;
+  
+  padding: 50px 20px; 
+  width: 92%; 
+  max-width: 460px; 
+  text-align: center; 
+  border: 4px solid #9100ff; 
+  box-shadow: 0 0 30px rgba(145, 0, 255, 0.6), 12px 12px 0px #39ff14; 
+  overflow: hidden; 
+  border-radius: 2px; 
+}
+.crt-overlay { position: absolute; inset: 0; background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.25) 50%); background-size: 100% 4px; pointer-events: none; z-index: 5; }
+
+.overlay-title { color: #39ff14; font-size: 22px; margin-bottom: 25px; text-shadow: 3px 3px #9100ff; }
+
+/* ★ 修正：長文に合わせて文字サイズを少し小さく、行間を広く */
+.main-msg { 
+  font-size: 16px; 
+  line-height: 2.2; 
+  color: #fff; 
+  margin-bottom: 30px; 
+  animation: tv-flicker 3s infinite; 
+}
+
+@keyframes tv-flicker { 
+  0%, 30%, 34%, 80%, 84%, 90%, 93%, 100% { opacity: 1; transform: translateX(0); } 
+  2%, 31%, 81%, 91% { opacity: 0.4; } 
+}
+
+/* ★ 修正：「何卒何卒です。」の枠と文字サイズを調整 */
+.yanki-box { display: inline-block; background: #9100ff; padding: 10px 25px; transform: rotate(-3deg); box-shadow: 6px 6px 0px #39ff14; animation: yanki-vibration 0.15s infinite; }
+.yanki-msg { font-size: 26px; color: #fff; margin: 0; }
+
+@keyframes yanki-vibration { 
+  0% { transform: rotate(-3deg); } 
+  50% { transform: rotate(-3deg) translate(-2px, 1px); } 
+  100% { transform: rotate(-3deg) translate(2px, -1px); } 
+}
+
+.zutomayo-close-btn { background: transparent; border: 2px solid #39ff14; color: #39ff14; padding: 12px 25px; font-size: 14px; margin-top: 35px; cursor: pointer; }

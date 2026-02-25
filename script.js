@@ -2,6 +2,7 @@ window.addEventListener("load", () => {
   const body = document.body;
   const loading = document.getElementById("loading-screen");
   const main = document.getElementById("main-content");
+  const introScreen = document.getElementById("intro-screen");
 
   const c3 = document.getElementById("count-3");
   const c2 = document.getElementById("count-2");
@@ -11,10 +12,8 @@ window.addEventListener("load", () => {
   const profileBtn = document.getElementById("profile-btn");
   const greeting = document.getElementById("greeting");
 
-  // 指定時間待機する関数
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-  // カウントダウンの数字を表示→非表示にする関数
   const showAndHide = async (el, showMs = 320, gapMs = 120) => {
     el.style.display = "block";
     el.classList.add("is-show");
@@ -34,24 +33,38 @@ window.addEventListener("load", () => {
   };
 
   (async () => {
-    // 3, 2, 1 を順番に表示
+    // 3, 2, 1 のカウントダウン
     await showAndHide(c3);
     await showAndHide(c2);
     await showAndHide(c1, 360, 80);
 
-    // ロード画面をフェードアウトし、メインコンテンツを表示
+    // ロード画面をフェードアウト開始
     loading.classList.add("fade-out");
+    
+    // 背景イラストとメインコンテンツをフェードイン開始
+    if (introScreen) {
+      introScreen.classList.remove("main-hidden");
+      introScreen.classList.add("main-visible");
+    }
     main.classList.remove("main-hidden");
     main.classList.add("main-visible");
 
+    // ★修正：イラストが見え始めた「この瞬間」からキッチリ3秒(3000ms)カウントする
+    setTimeout(() => {
+      const introHint = document.getElementById("intro-scroll-hint");
+      if (introHint) {
+        introHint.classList.add("show");
+      }
+    }, 3000);
+
+    // ロード画面が完全に消えるのを待つ（裏側の処理）
     await sleep(1000);
     loading.style.display = "none";
     body.classList.remove("no-scroll");
 
-    // スクロール検知の設定
+    // スクロール検知
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        // 指定ポイントを通過したら、ごあいさつとボタンを表示
         if (entry.isIntersecting) {
           profileBtn.classList.add("show");
           greeting.classList.add("show");

@@ -1,7 +1,7 @@
 import os
 
 # 写真が入っているフォルダの絶対パス
-folder_path = r"C:\Users\koyo\Desktop\app\Wedding\images\photo"
+folder_path = r"C:\Users\koyo\Desktop\app\Wedding\images\photo\ztmy"
 
 # 対象とする拡張子
 extensions = (".jpg", ".jpeg", ".png", ".JPG", ".JPEG", ".PNG")

@@ -9,99 +9,121 @@
 
 * { box-sizing: border-box; }
 
+/* --- 1. 画面全体のスクロールを完全に禁止 --- */
 body {
   margin: 0;
+  padding: 0;
+  height: 100vh;       /* 画面の高さを100%にピタッと合わせる */
+  overflow: hidden;    /* 縦・横のスクロールはみ出しを禁止 */
   font-family: 'Shippori Mincho', serif;
   background: var(--bg-gradient);
-  background-attachment: fixed;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  overflow-x: hidden;
 }
 
+/* --- 2. ヘッダー（タイトル） --- */
 .header {
-  padding: 60px 20px 40px;
+  flex-shrink: 0;      /* 写真が大きくなってもタイトルが潰れないようにする */
+  padding: 30px 20px 10px; /* 余白を調整して写真のスペースを確保 */
   text-align: center;
 }
 
 .title {
   font-family: 'VT323';
-  font-size: 40px;
+  font-size: 36px;
   color: var(--title-color);
   margin: 0;
   letter-spacing: 0.1em;
 }
 
-.sub { color: #999; font-size: 14px; margin-top: 10px; }
-
-.gallery-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 25px;
-  padding-bottom: 140px;
+.sub {
+  color: #999;
+  font-size: 14px;
+  margin-top: 5px;
 }
 
+/* --- 3. 写真エリア：残りのスペースを限界まで使う --- */
+.gallery-container {
+  flex-grow: 1;        /* ヘッダー以外の高さをすべて使う */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 2つのレーンを上下の中央に配置 */
+  gap: 20px;           /* 上段と下段の隙間 */
+  padding-bottom: 80px; /* 下部の固定ボタンと被らないように余白を確保 */
+}
+
+/* レーン自体の設定（横スクロール有効・スクロールバー非表示） */
 .photo-lane {
   width: 100%;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
   display: flex;
   touch-action: pan-x;
   cursor: grab;
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
 }
 
 .photo-lane:active { cursor: grabbing; }
 .photo-lane::-webkit-scrollbar { display: none; }
-.photo-lane { -ms-overflow-style: none; scrollbar-width: none; }
 
+/* --- 4. 写真の枠と画像（スクロールしない最大サイズ） --- */
 .lane-inner {
   display: flex;
-  flex-wrap: nowrap;
-  gap: 15px;
-  padding: 0 15px;
+  gap: 20px; /* 写真同士の隙間 */
+  width: max-content;
 }
 
-/* ★ 高さを揃え、横幅は元の比率を維持する設定 */
 .ph {
-  height: 160px; /* ここでお好みの高さに統一できます */
-  width: auto;   /* 横幅は比率に合わせて自動計算 */
-  flex-shrink: 0;
-  border-radius: 8px;
+  /* 画面の高さ（vh）を基準に、ボタンやタイトルを避けた最大サイズを指定 */
+  height: 33vh; 
+  width: auto;           /* 横幅は画像の比率に合わせて自動調整 */
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  background: #fff;
+  flex-shrink: 0;        /* 縮むのを防止 */
+  background: transparent; 
 }
 
 .ph img {
-  height: 100%;  /* 親要素(ph)の高さに合わせる */
-  width: auto;   /* 比率を維持 */
+  height: 100%;
+  width: auto;
+  object-fit: contain;   /* カット（クロップ）せずに全体を表示する */
   display: block;
-  object-fit: contain; /* 画像を切らずに表示 */
 }
 
-.back {
+/* --- 5. 下部固定ナビゲーションボタンとホバー演出 --- */
+#fixed-nav, .back {
   position: fixed;
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 15px;
-  z-index: 100;
-  pointer-events: none;
+  gap: 12px;
+  z-index: 9999; /* 写真より確実に手前へ */
+  pointer-events: none; /* コンテナ自体はクリックを邪魔しない */
 }
 
+/* ボタン（ピル型）のスタイル */
 .pill {
-  pointer-events: auto;
+  pointer-events: auto; /* ボタン単体はクリック可能に */
   text-decoration: none;
-  color: var(--accent);
+  color: var(--accent); 
   border: 1px solid var(--accent);
-  padding: 10px 30px;
+  padding: 12px 25px;
   border-radius: 999px;
-  font-family: 'VT323';
-  font-size: 18px;
-  background: rgba(255, 255, 255, 0.9);
-  transition: all 0.3s;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease; /* 滑らかに変化させる */
+  min-width: 90px;
+  text-align: center;
+}
+
+/* ホバー時のアクション */
+.pill:hover {
+  background: var(--accent); 
+  color: #fff;         
+  transform: translateY(-3px); /* 少し上に浮かせる */
+  box-shadow: 0 8px 25px rgba(93, 80, 72, 0.2);
 }
