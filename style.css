@@ -8,19 +8,30 @@
 }
 
 
+/* --- 修正前はbodyの中にbackgroundを書いていましたが、削除します --- */
 body {
   margin: 0;
   font-family: 'Shippori Mincho', serif;
-  background-image: url('./images/top_bg.JPG');
-  
-  /* ★修正：cover を 100% 100% に変更します */
-  background-size: 100% 100%; 
-  
-  background-position: center center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+  /* ここにあった background-image などは消してください */
 }
 
+/* --- ★新しく追加：スマホでも絶対に動かない背景 --- */
+body::before {
+  content: "";
+  display: block;
+  position: fixed;  /* 画面に完全に固定 */
+  top: 0;
+  left: 0;
+  width: 100vw;     /* 画面の幅ぴったり */
+  height: 100vh;    /* 画面の高さぴったり */
+  z-index: -1;      /* 全ての要素の一番後ろに配置 */
+  
+  /* 画像の設定 */
+  background-image: url('./images/top_bg.JPG');
+  background-size: 100% 100%; /* 縦横の比率を変えてでも画面にピッタリ合わせる */
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 .no-scroll {
   overflow: hidden;
 }
