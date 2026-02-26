@@ -97,31 +97,57 @@ body {
 .story-text-area p { margin-bottom: 20px; }
 
 /* --- フォトスライダー：画像カットなし & 手動操作対応 --- */
-.lane-section { display: flex; flex-direction: column; overflow: hidden; }
+.lane-section {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* ★追加：写真が画面の中央に来るように余白を調整 */
+  justify-content: center; 
+  min-height: 100vh; /* 1画面分の高さを確保して写真を際立たせる */
+}
 
-.lane-wrapper { 
-  width: 100vw; 
-  /* 指でスライドできるようにスクロールを有効化 */
+.lane-wrapper {
+  width: 100vw;
+  /* 指でスライドできるようにスクロールを有効にする設定はJSで制御している前提 */
   overflow-x: auto; 
-  padding: 20px 0; 
+  padding: 20px 0;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch; 
 }
 .lane-wrapper::-webkit-scrollbar { display: none; }
 
-.photo-lane { 
-  display: flex; 
-  gap: 15px; 
-  width: max-content; 
+.photo-lane {
+  display: flex;
+  gap: 20px; /* 写真同士の隙間（大きくすると見やすいです） */
+  width: max-content;
 }
 
-.photo-item { 
-  /* ★修正：高さを280pxに固定し、幅は画像本来の比率に合わせる */
-  height: 280px; 
-  width: auto; 
-  border-radius: 12px; 
-  overflow: hidden; 
-  flex-shrink: 0; 
+/* ★ 修正：写真の枠（比率維持のまま限界まで大きくする） */
+.photo-item {
+  /* 高さを大きく指定します。
+     文章カードとのバランスを考え、画面の高さの70%（70vh）程度にするのがおすすめです。
+     PCでもスマホでもインパクトのある大きさになります。
+     ※もし大きすぎる場合は、60vh や 500px などに調整してください */
+  height: 70vh; 
+  width: auto;           /* 横幅は画像の比率に合わせて自動調整 */
+  
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;        /* 幅が縮まないように固定 */
+  /* 切り抜かない（contain）設定なので、余白部分が目立たないよう背景色を透明に */
+  background: transparent; 
+}
+
+/* ★ 修正：画像本体（比率を維持して全体を表示） */
+.photo-item img {
+  /* 枠の高さ（70vh）いっぱいに画像を表示 */
+  height: 100%;
+  width: auto;
+  
+  /* ★重要：カット（cover）をやめ、全体を表示し、歪ませない設定 */
+  object-fit: contain; 
+  
+  display: block;
 }
 
 .photo-item img { 

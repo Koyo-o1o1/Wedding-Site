@@ -232,25 +232,30 @@ body {
 #final-message-overlay { position: fixed; inset: 0; background: rgba(13, 1, 23, 0.98); backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
 #final-message-overlay.show { opacity: 1; pointer-events: auto; }
 
+/* ★ 修正：全画面表示 ＆ 枠線・影の削除 */
 .overlay-inner.zutomayo-style { 
   position: relative; 
-  /* ★ 修正：元の単色背景を消し、画像を設定 */
-  /* 文字が背景に埋もれないよう、rgba(...) でうっすらと暗い紫のフィルターを重ねています */
+  /* 背景画像とフィルター設定 */
   background: linear-gradient(rgba(15, 0, 26, 0.5), rgba(15, 0, 26, 0.5)), url('images/special.jpg');
   background-size: cover;
   background-position: center;
   
-  padding: 50px 20px; 
-  width: 92%; 
-  max-width: 460px; 
+  /* ★ 画面いっぱいに広げる設定 */
+  width: 100vw; 
+  height: 100vh; 
+  
+  /* 中身の文字を画面のド真ん中に配置する設定 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  padding: 20px; 
   text-align: center; 
-  border: 4px solid #9100ff; 
-  box-shadow: 0 0 30px rgba(145, 0, 255, 0.6), 12px 12px 0px #39ff14; 
   overflow: hidden; 
-  border-radius: 2px; 
 }
-.crt-overlay { position: absolute; inset: 0; background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.25) 50%); background-size: 100% 4px; pointer-events: none; z-index: 5; }
 
+.crt-overlay { position: absolute; inset: 0; background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.25) 50%); background-size: 100% 4px; pointer-events: none; z-index: 5; }
 .overlay-title { color: #39ff14; font-size: 22px; margin-bottom: 25px; text-shadow: 3px 3px #9100ff; }
 
 /* ★ 修正：長文に合わせて文字サイズを少し小さく、行間を広く */
